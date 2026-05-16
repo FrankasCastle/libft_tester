@@ -7,10 +7,10 @@
 #include <strings.h>
 #include <unistd.h>
 
-static int	g_ok = 0;
-static int	g_ko = 0;
+int	g_ok = 0;
+int	g_ko = 0;
 
-static void	print_result(char *name, int ok)
+void	print_result(char *name, int ok)
 {
 	if (ok)
 	{
@@ -24,12 +24,12 @@ static void	print_result(char *name, int ok)
 	}
 }
 
-static void	print_line(void)
+void	print_line(void)
 {
 	printf("----------------------------------------\n");
 }
 
-static void	print_title(char *name)
+void	print_title(char *name)
 {
 	printf("\n");
 	print_line();
@@ -37,35 +37,35 @@ static void	print_title(char *name)
 	print_line();
 }
 
-static void	compare_int(char *name, int official, int mine)
+void	compare_int(char *name, int official, int mine)
 {
 	printf("Esperado [função oficial] = %d\n", official);
 	printf("Esperado [minha função]   = %d\n", mine);
 	print_result(name, official == mine);
 }
 
-static void	compare_size(char *name, size_t official, size_t mine)
+void	compare_size(char *name, size_t official, size_t mine)
 {
 	printf("Esperado [função oficial] = %zu\n", official);
 	printf("Esperado [minha função]   = %zu\n", mine);
 	print_result(name, official == mine);
 }
 
-static void	compare_str(char *name, char *official, char *mine)
+void	compare_str(char *name, char *official, char *mine)
 {
 	printf("Esperado [função oficial] = \"%s\"\n", official);
 	printf("Esperado [minha função]   = \"%s\"\n", mine);
 	print_result(name, strcmp(official, mine) == 0);
 }
 
-static void	compare_ptr(char *name, void *official, void *mine)
+void	compare_ptr(char *name, void *official, void *mine)
 {
 	printf("Esperado [função oficial] = %p\n", official);
 	printf("Esperado [minha função]   = %p\n", mine);
 	print_result(name, official == mine);
 }
 
-static void	print_buffer(char *label, unsigned char *s, size_t n)
+void	print_buffer(char *label, unsigned char *s, size_t n)
 {
 	size_t	i;
 
@@ -81,7 +81,7 @@ static void	print_buffer(char *label, unsigned char *s, size_t n)
 	printf("\n");
 }
 
-static void	print_split(char **split)
+void	print_split(char **split)
 {
 	int	i;
 
@@ -97,7 +97,7 @@ static void	print_split(char **split)
 	printf(", NULL}\n");
 }
 
-static void	free_split(char **split)
+void	free_split(char **split)
 {
 	int	i;
 
@@ -112,7 +112,7 @@ static void	free_split(char **split)
 	free(split);
 }
 
-static void	print_list(t_list *lst)
+void	print_list(t_list *lst)
 {
 	printf("{");
 	while (lst)
@@ -125,12 +125,12 @@ static void	print_list(t_list *lst)
 	printf("}\n");
 }
 
-static void	free_content(void *content)
+void	free_content(void *content)
 {
 	free(content);
 }
 
-static void	to_upper_content(void *content)
+void	to_upper_content(void *content)
 {
 	char	*s;
 	int		i;
@@ -145,12 +145,12 @@ static void	to_upper_content(void *content)
 	}
 }
 
-static void	*dup_content(void *content)
+void	*dup_content(void *content)
 {
 	return (ft_strdup((char *)content));
 }
 
-static char	map_upper(unsigned int i, char c)
+char	map_upper(unsigned int i, char c)
 {
 	(void)i;
 	if (c >= 'a' && c <= 'z')
@@ -158,14 +158,14 @@ static char	map_upper(unsigned int i, char c)
 	return (c);
 }
 
-static void	iteri_upper(unsigned int i, char *c)
+void	iteri_upper(unsigned int i, char *c)
 {
 	(void)i;
 	if (*c >= 'a' && *c <= 'z')
 		*c -= 32;
 }
 
-static void	test_isalpha(void)
+void	test_isalpha(void)
 {
 	print_title("ft_isalpha");
 	compare_int("ft_isalpha('A')", !!isalpha('A'), ft_isalpha('A'));
@@ -174,7 +174,7 @@ static void	test_isalpha(void)
 	compare_int("ft_isalpha('*')", !!isalpha('*'), ft_isalpha('*'));
 }
 
-static void	test_isdigit(void)
+void	test_isdigit(void)
 {
 	print_title("ft_isdigit");
 	compare_int("ft_isdigit('4')", !!isdigit('4'), ft_isdigit('4'));
@@ -183,7 +183,7 @@ static void	test_isdigit(void)
 	compare_int("ft_isdigit('/')", !!isdigit('/'), ft_isdigit('/'));
 }
 
-static void	test_isalnum(void)
+void	test_isalnum(void)
 {
 	print_title("ft_isalnum");
 	compare_int("ft_isalnum('A')", !!isalnum('A'), ft_isalnum('A'));
@@ -192,7 +192,7 @@ static void	test_isalnum(void)
 	compare_int("ft_isalnum('/')", !!isalnum('/'), ft_isalnum('/'));
 }
 
-static void	test_isascii(void)
+void	test_isascii(void)
 {
 	print_title("ft_isascii");
 	compare_int("ft_isascii('a')", !!isascii('a'), ft_isascii('a'));
@@ -201,7 +201,7 @@ static void	test_isascii(void)
 	compare_int("ft_isascii(500)", 0, ft_isascii(500));
 }
 
-static void	test_isprint(void)
+void	test_isprint(void)
 {
 	print_title("ft_isprint");
 	compare_int("ft_isprint('a')", !!isprint('a'), ft_isprint('a'));
@@ -210,7 +210,7 @@ static void	test_isprint(void)
 	compare_int("ft_isprint(127)", !!isprint(127), ft_isprint(127));
 }
 
-static void	test_strlen(void)
+void	test_strlen(void)
 {
 	char	s[] = "Ola";
 	char	s2[] = "";
@@ -220,7 +220,7 @@ static void	test_strlen(void)
 	compare_size("ft_strlen(\"\")", strlen(s2), ft_strlen(s2));
 }
 
-static void	test_memset(void)
+void	test_memset(void)
 {
 	unsigned char	a[6] = "teste";
 	unsigned char	b[6] = "teste";
@@ -233,7 +233,7 @@ static void	test_memset(void)
 	print_result("ft_memset", memcmp(a, b, 6) == 0);
 }
 
-static void	test_bzero(void)
+void	test_bzero(void)
 {
 	unsigned char	a[6] = "teste";
 	unsigned char	b[6] = "teste";
@@ -246,7 +246,7 @@ static void	test_bzero(void)
 	print_result("ft_bzero", memcmp(a, b, 6) == 0);
 }
 
-static void	test_memcpy(void)
+void	test_memcpy(void)
 {
 	char	a[10] = "abcdefghi";
 	char	b[10] = "abcdefghi";
@@ -258,7 +258,7 @@ static void	test_memcpy(void)
 	compare_str("ft_memcpy", a, b);
 }
 
-static void	test_memmove(void)
+void	test_memmove(void)
 {
 	char	a[20] = "oldstring";
 	char	b[20] = "oldstring";
@@ -274,7 +274,7 @@ static void	test_memmove(void)
 	compare_str("ft_memmove overlap", c, d);
 }
 
-static void	test_strlcpy(void)
+void	test_strlcpy(void)
 {
 	char	a[50];
 	char	b[50];
@@ -289,7 +289,7 @@ static void	test_strlcpy(void)
 	compare_str("ft_strlcpy dest", a, b);
 }
 
-static void	test_strlcat(void)
+void	test_strlcat(void)
 {
 	char	a[14] = "string ";
 	char	b[14] = "string ";
@@ -304,7 +304,7 @@ static void	test_strlcat(void)
 	compare_str("ft_strlcat dest", a, b);
 }
 
-static void	test_toupper(void)
+void	test_toupper(void)
 {
 	print_title("ft_toupper");
 	compare_int("ft_toupper('a')", toupper('a'), ft_toupper('a'));
@@ -312,7 +312,7 @@ static void	test_toupper(void)
 	compare_int("ft_toupper('4')", toupper('4'), ft_toupper('4'));
 }
 
-static void	test_tolower(void)
+void	test_tolower(void)
 {
 	print_title("ft_tolower");
 	compare_int("ft_tolower('A')", tolower('A'), ft_tolower('A'));
@@ -320,7 +320,7 @@ static void	test_tolower(void)
 	compare_int("ft_tolower('4')", tolower('4'), ft_tolower('4'));
 }
 
-static void	test_strchr(void)
+void	test_strchr(void)
 {
 	char	s[] = "aloooeiii";
 
@@ -330,7 +330,7 @@ static void	test_strchr(void)
 	compare_ptr("ft_strchr('x')", strchr(s, 'x'), ft_strchr(s, 'x'));
 }
 
-static void	test_strrchr(void)
+void	test_strrchr(void)
 {
 	char	s[] = "teste";
 
@@ -340,7 +340,7 @@ static void	test_strrchr(void)
 	compare_ptr("ft_strrchr('x')", strrchr(s, 'x'), ft_strrchr(s, 'x'));
 }
 
-static void	test_strncmp(void)
+void	test_strncmp(void)
 {
 	char	s1[] = "teste1";
 	char	s2[] = "teste2";
@@ -351,7 +351,7 @@ static void	test_strncmp(void)
 	compare_int("ft_strncmp equal", strncmp("abc", "abc", 3), ft_strncmp("abc", "abc", 3));
 }
 
-static void	test_memchr(void)
+void	test_memchr(void)
 {
 	char	s[] = "te.ste";
 
@@ -361,7 +361,7 @@ static void	test_memchr(void)
 	compare_ptr("ft_memchr n zero", memchr(s, 't', 0), ft_memchr(s, 't', 0));
 }
 
-static void	test_memcmp(void)
+void	test_memcmp(void)
 {
 	char	s1[] = "teste";
 	char	s2[] = "testa";
@@ -372,7 +372,7 @@ static void	test_memcmp(void)
 	compare_int("ft_memcmp n zero", memcmp(s1, s2, 0), ft_memcmp(s1, s2, 0));
 }
 
-static void	test_strnstr(void)
+void	test_strnstr(void)
 {
 	char	s1[] = "ola 42";
 	char	s2[] = "42";
@@ -383,7 +383,7 @@ static void	test_strnstr(void)
 	compare_ptr("ft_strnstr empty needle", strnstr(s1, "", 7), ft_strnstr(s1, "", 7));
 }
 
-static void	test_atoi(void)
+void	test_atoi(void)
 {
 	print_title("ft_atoi");
 	compare_int("ft_atoi +2145abc451", atoi("+2145abc451"), ft_atoi("+2145abc451"));
@@ -391,7 +391,7 @@ static void	test_atoi(void)
 	compare_int("ft_atoi invalid", atoi("abc42"), ft_atoi("abc42"));
 }
 
-static void	test_calloc(void)
+void	test_calloc(void)
 {
 	unsigned char	*a;
 	unsigned char	*b;
@@ -409,7 +409,7 @@ static void	test_calloc(void)
 	free(b);
 }
 
-static void	test_strdup(void)
+void	test_strdup(void)
 {
 	char	*a;
 	char	*b;
@@ -424,7 +424,7 @@ static void	test_strdup(void)
 	free(b);
 }
 
-static void	test_substr(void)
+void	test_substr(void)
 {
 	char	*s;
 
@@ -441,7 +441,7 @@ static void	test_substr(void)
 	free(s);
 }
 
-static void	test_strjoin(void)
+void	test_strjoin(void)
 {
 	char	*s;
 
@@ -455,7 +455,7 @@ static void	test_strjoin(void)
 	free(s);
 }
 
-static void	test_strtrim(void)
+void	test_strtrim(void)
 {
 	char	*s;
 
@@ -469,7 +469,7 @@ static void	test_strtrim(void)
 	free(s);
 }
 
-static void	test_split(void)
+void	test_split(void)
 {
 	char	**split;
 
@@ -486,7 +486,7 @@ static void	test_split(void)
 	free_split(split);
 }
 
-static void	test_itoa(void)
+void	test_itoa(void)
 {
 	char	*s;
 
@@ -499,7 +499,7 @@ static void	test_itoa(void)
 	free(s);
 }
 
-static void	test_strmapi(void)
+void	test_strmapi(void)
 {
 	char	*s;
 
@@ -512,7 +512,7 @@ static void	test_strmapi(void)
 	free(s);
 }
 
-static void	test_striteri(void)
+void	test_striteri(void)
 {
 	char	s[] = "teste";
 
@@ -524,7 +524,7 @@ static void	test_striteri(void)
 	print_result("ft_striteri", strcmp(s, "TESTE") == 0);
 }
 
-static void	test_putchar_fd(void)
+void	test_putchar_fd(void)
 {
 	print_title("ft_putchar_fd");
 	printf("Saída esperada: A\n");
@@ -534,7 +534,7 @@ static void	test_putchar_fd(void)
 	print_result("ft_putchar_fd", 1);
 }
 
-static void	test_putstr_fd(void)
+void	test_putstr_fd(void)
 {
 	print_title("ft_putstr_fd");
 	printf("Saída esperada: teste\n");
@@ -544,7 +544,7 @@ static void	test_putstr_fd(void)
 	print_result("ft_putstr_fd", 1);
 }
 
-static void	test_putendl_fd(void)
+void	test_putendl_fd(void)
 {
 	print_title("ft_putendl_fd");
 	printf("Saída esperada: teste + quebra de linha\n");
@@ -554,7 +554,7 @@ static void	test_putendl_fd(void)
 	print_result("ft_putendl_fd", 1);
 }
 
-static void	test_putnbr_fd(void)
+void	test_putnbr_fd(void)
 {
 	print_title("ft_putnbr_fd");
 	printf("Saída esperada: -2147483648\n");
@@ -564,7 +564,7 @@ static void	test_putnbr_fd(void)
 	print_result("ft_putnbr_fd", 1);
 }
 
-static void	test_lstnew(void)
+void	test_lstnew(void)
 {
 	t_list	*node;
 
@@ -578,7 +578,7 @@ static void	test_lstnew(void)
 	ft_lstdelone(node, free_content);
 }
 
-static void	test_lstadd_front(void)
+void	test_lstadd_front(void)
 {
 	t_list	*lst;
 	t_list	*node;
@@ -596,7 +596,7 @@ static void	test_lstadd_front(void)
 	ft_lstclear(&lst, free_content);
 }
 
-static void	test_lstsize(void)
+void	test_lstsize(void)
 {
 	t_list	*lst;
 
@@ -613,7 +613,7 @@ static void	test_lstsize(void)
 	ft_lstclear(&lst, free_content);
 }
 
-static void	test_lstlast(void)
+void	test_lstlast(void)
 {
 	t_list	*lst;
 	t_list	*last;
@@ -631,7 +631,7 @@ static void	test_lstlast(void)
 	ft_lstclear(&lst, free_content);
 }
 
-static void	test_lstadd_back(void)
+void	test_lstadd_back(void)
 {
 	t_list	*lst;
 
@@ -647,7 +647,7 @@ static void	test_lstadd_back(void)
 	ft_lstclear(&lst, free_content);
 }
 
-static void	test_lstdelone(void)
+void	test_lstdelone(void)
 {
 	t_list	*node;
 
@@ -660,7 +660,7 @@ static void	test_lstdelone(void)
 	print_result("ft_lstdelone", 1);
 }
 
-static void	test_lstclear(void)
+void	test_lstclear(void)
 {
 	t_list	*lst;
 
@@ -677,7 +677,7 @@ static void	test_lstclear(void)
 	print_result("ft_lstclear", lst == NULL);
 }
 
-static void	test_lstiter(void)
+void	test_lstiter(void)
 {
 	t_list	*lst;
 
@@ -695,7 +695,7 @@ static void	test_lstiter(void)
 	ft_lstclear(&lst, free_content);
 }
 
-static void	test_lstmap(void)
+void	test_lstmap(void)
 {
 	t_list	*lst;
 	t_list	*new_lst;

@@ -150,6 +150,17 @@ void	*dup_content(void *content)
 	return (ft_strdup((char *)content));
 }
 
+void	*upper_content (void *content)
+{
+	char	*str;
+
+	str = ft_strdup((char *)content);
+	if (!str)
+		return (NULL);
+	str[0] = ft_toupper(str[0]);
+	return (str);
+}
+
 char	map_upper(unsigned int i, char c)
 {
 	(void)i;
@@ -706,12 +717,12 @@ void	test_lstmap(void)
 	ft_lstadd_back(&lst, ft_lstnew(ft_strdup("c")));
 	printf("Linked list original: ");
 	print_list(lst);
-	new_lst = ft_lstmap(lst, dup_content, free_content);
+	new_lst = ft_lstmap(lst, upper_content, free_content);
 	printf("Nova linked list após função: ");
 	print_list(new_lst);
 	printf("Explicação: ft_lstmap criou uma nova lista aplicando uma função em cada content.\n");
 	print_result("ft_lstmap", new_lst && ft_lstsize(new_lst) == 3
-		&& strcmp(new_lst->content, "a") == 0);
+		&& strcmp(new_lst->content, "A") == 0);
 	ft_lstclear(&lst, free_content);
 	ft_lstclear(&new_lst, free_content);
 }
